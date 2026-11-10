@@ -1,12 +1,27 @@
-R, C = map(int, input().split(" "))
-grid = [list(map(int, input().split(" "))) for _ in range(R)]
+n = int(input())
+entries = []
+for _ in range(n):
+    name, ms = input().split(" ")
+    entries.append((int(ms), name))
 
-# TODO: result = the transposed grid (C rows of R numbers), negatives replaced by 0
-#   hint: outer loop over columns, inner loop over rows, if/else in front
-result = [[grid[j][i] if grid[j][i] > 0 else 0 for j in range(R)] for i in range(C)]
-# TODO: positive = True only when every ORIGINAL cell is greater than 0
-positive = all([grid[i][j] > 0 for i in range(R) for j in range(C)])
+entries.sort()
 
-for row in result:
-    print(*row)
-print("all_positive:", "yes" if positive else "no")
+best_ms:int
+worst_name:str
+worst_ms:int
+for place, (ms, name) in enumerate(entries, start=1):
+    if place == 1:
+        best_ms = ms
+    if place == n:
+        worst_name = name
+        worst_ms = ms
+    if place <= 3:
+        print(f"{place}. {name} {ms}")
+
+f_slowest = f"{worst_name} {worst_ms}"
+gap = worst_ms - best_ms
+
+# TODO: rank the entries so the fastest comes first and ties are alphabetical
+# TODO: print the podium lines, then the slowest line and the gap
+print(f"slowest: {f_slowest}")
+print(f"gap: {gap}")
